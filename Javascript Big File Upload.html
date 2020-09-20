@@ -1,0 +1,35 @@
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<input type="file" id="file" />
+<button id="get-time">Get Time</button>
+<script>
+    document.getElementById('get-time').onclick = function () {
+        let file = document.getElementById('file').files[0];
+        //let fr = new FileReader();
+        let chunkSize = 100*1024;
+        let fileSize = file.size;
+        let chunks = Math.ceil(file.size/chunkSize);
+        let chunk = 0;
+        console.log('file size..',fileSize);
+        console.log('chunks...',chunks);
+        while (chunk < chunks) {
+            let fr = new FileReader();
+            let offset = chunk*chunkSize;
+            //console.log('current chunk..', chunk);
+            //console.log('offset...', chunk*chunkSize);
+            //console.log('file blob from offset...', offset)
+            let slice = file.slice(offset,offset+chunkSize);
+            //console.log(slice);
+            fr.readAsArrayBuffer(slice);
+            chunk++;
+                fr.onload = function () {
+                let buffer = new Uint8Array(fr.result);
+                let snippet = new TextDecoder('utf-8').decode(buffer);
+                console.log("debugging point 1", snippet);
+                console.log("debugging point 2", snippet.indexOf("date"))
+                console.log("debugging point 3", buffer);
+                
+            }
+        }
+    }
+</script>
