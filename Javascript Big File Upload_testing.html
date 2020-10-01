@@ -8,6 +8,7 @@
         //let fr = new FileReader();
         let chunkSize = 100*1024;
         let fileSize = file.size;
+		let val = 0;
         let chunks = Math.ceil(file.size/chunkSize);
         let chunk = 0;
         console.log('file size..',fileSize);
